@@ -7,12 +7,29 @@
 package main
 
 import (
-	"io"
 	"io/ioutil"
 )
 
-type storager interface {
+type dataPersister interface {
 	Put(string, string) error
-	PutStream(string, io.Writer) error
 	Get(string) (string, error)
+}
+
+type dataOnDiskPersister struct {
+}
+
+func newDataOnDiskPersister() dataPersister {
+	return dataOnDiskPersister{}
+}
+
+func (d dataOnDiskPersister) Get(fpath string) (string, error) {
+	res, err := ioutil.ReadFile(fpath)
+	if err != nil {
+		return "", err
+	}
+	return string(res), err
+}
+
+func (d dataOnDiskPersister) Put(fpath string, data string) error {
+	return ioutil.WriteFile(fpath, string(data), 0644)
 }
