@@ -6,7 +6,13 @@
 // @@@@@@ At 2019-05-19 00:21 <thereisnodotcollective@gmail.com> @@@@@@@@@@@@@@@@@@@@@@@@
 package main
 
-type storage interface {
+import (
+	"io"
+	"io/ioutil"
+)
+
+type storager interface {
 	Put(string, string) error
+	PutStream(string, io.Writer) error
 	Get(string) (string, error)
 }
