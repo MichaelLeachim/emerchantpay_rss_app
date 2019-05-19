@@ -11,7 +11,8 @@ import (
 	rss_reader "github.com/MichaelLeachim/emerchantpay_rss_reader"
 )
 
-func printOnTheScreen(st storage, p printer, fpath string) error {
+func printOnTheScreen(st dataPersister, p printer, fpath string) error {
+
 	res, err := st.Get(fpath)
 	if err != nil {
 		return err
