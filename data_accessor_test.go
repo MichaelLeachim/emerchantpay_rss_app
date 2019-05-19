@@ -3,25 +3,16 @@
 // @ You can find additional information regarding licensing of this work in LICENSE.md @
 // @ You must not remove this notice, or any other, from this software.                 @
 // @ All rights reserved.                                                               @
-// @@@@@@ At 2019-05-19 00:06 <thereisnodotcollective@gmail.com> @@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@ At 2019-05-19 22:27 <thereisnodotcollective@gmail.com> @@@@@@@@@@@@@@@@@@@@@@@@
+
 package main
 
 import (
-	rss_reader "github.com/MichaelLeachim/emerchantpay_rss_reader"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
-type dataAccessor interface {
-	Parse(links []string) []rss_reader.RssItem
-}
-
-type urlDataAccessor struct {
-}
-
-func newUrlDataAccessor() dataAccessor {
-	return urlDataAccessor{}
-}
-
-func (m urlDataAccessor) Parse(links []string) []rss_reader.RssItem {
-	return rss_reader.Parse(links)
+func TestRfc822parseIntoSelf(t *testing.T) {
+	assert.Equal(t, newUrlDataAccessor().Parse([]string{"https://news.ycombinator.com/rss"}), nil)
 
 }
