@@ -44,7 +44,6 @@ func (f flagParamGetter) Bool(name string, value bool, usage string) *bool {
 }
 
 func (f flagParamGetter) List(name string, value []string, usage string) []string {
-
 	urlset := listOfUrls(value)
 	flag.Var(&urlset, "urlset", "Urls, that contain the data to parse")
 	return urlset
