@@ -24,7 +24,3 @@ func TestDownloadingPersistingAndLoading(t *testing.T) {
 	assert.Equal(t, len(mockPrinter.ReadPrinted()), 6)
 	assert.Equal(t, mockPrinter.ReadPrinted()[0].Title, "Google suspends some business with Huawei")
 }
-
-func TestApp(t *testing.T) {
-	assert.Equal(t, 1, 1)
-}

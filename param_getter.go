@@ -13,7 +13,6 @@ import (
 type paramGetter interface {
 	String(name string, value string, usage string) *string
 	Bool(name string, value bool, usage string) *bool
-	List(name string, value []string, usage string) []string
 	Parse()
 }
 
@@ -41,12 +40,6 @@ func (f flagParamGetter) String(name string, value string, usage string) *string
 
 func (f flagParamGetter) Bool(name string, value bool, usage string) *bool {
 	return flag.Bool(name, value, usage)
-}
-
-func (f flagParamGetter) List(name string, value []string, usage string) []string {
-	urlset := listOfUrls(value)
-	flag.Var(&urlset, "urlset", "Urls, that contain the data to parse")
-	return urlset
 }
 
 func (f flagParamGetter) Parse() {
