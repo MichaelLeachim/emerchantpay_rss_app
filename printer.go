@@ -36,11 +36,11 @@ func newConsolePrinter() printer {
 }
 
 type htmlPrinter struct {
-	storage storager
+	storage dataPersister
 	tmpname string
 }
 
-func newHtmlPrinter(storage storager, tmpname string) printer {
+func newHtmlPrinter(storage dataPersister, tmpname string) printer {
 	return htmlPrinter{storage: storage, tmpname: tmpname}
 }
 

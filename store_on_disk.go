@@ -10,10 +10,10 @@ import (
 	"encoding/json"
 )
 
-func storeOnDisk(da dataAccessor, st storage, fpath string, links []string) error {
+func storeOnDisk(da dataAccessor, dp dataPersister, fpath string, links []string) error {
 	b, err := json.Marshal(da.Parse(links))
 	if err != nil {
 		return err
 	}
-	return st.Put(fpath, string(b))
+	return dp.Put(fpath, string(b))
 }

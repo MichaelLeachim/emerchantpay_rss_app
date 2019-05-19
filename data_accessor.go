@@ -17,7 +17,7 @@ type dataAccessor interface {
 type mockDataAccessor struct {
 }
 
-func (m *mockDataAccessor) Parse(links []string) []rss_reader.RssItem {
+func (m mockDataAccessor) Parse(links []string) []rss_reader.RssItem {
 	return []rss_reader.RssItem{}
 }
 
@@ -28,7 +28,7 @@ func newUrlDataAccessor() dataAccessor {
 	return urlDataAccessor{}
 }
 
-func (m *urlDataAccessor) Parse(links []string) []rss_reader.RssItem {
+func (m urlDataAccessor) Parse(links []string) []rss_reader.RssItem {
 	return rss_reader.Parse(links)
 
 }

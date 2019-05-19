@@ -7,48 +7,27 @@
 
 package main
 
-import (
-	"flag"
-	rss_reader "github.com/MichaelLeachim/emerchantpay_rss_reader"
-	
-)
-type listOfUrls []string
+func app(da dataAccessor, dp dataPersister, pg paramGetter, log logger, print printer) {
 
-func (i *listOfUrls) String() string {
-	return "my string representation"
-}
+	urlset := pg.List("urlset", []string{}, "Urls, that contain the data to parse")
+	outfile := pg.String("out", "tempdata/output.json", "Path to the output file")
+	infile := pg.String("in", "tempdata/input.json", "Path to the input file")
+	isDisplay := pg.Bool("print", false, "Shold print the data from the <in> file")
+	isSave := pg.Bool("save", false, "Should save the data into the <out> file")
+	pg.Parse()
 
-func (i *listOfUrls) Set(value string) error {
-	*i = append(*i, value)
-	return nil
-}
-
-func app(da dataAccessor, dp dataPersister, log logger, print printer) {
-	urlset := listOfUrls{}
-	flag.Var(&urlset, "urlset", "Urls, that contain the data to parse")
-	outfile := flag.String("out", "tempdata/output.json", "Path to the output file")
-	infile := flag.String("in", "tempdata/input.json", "Path to the input file")
-	isDisplay := flag.Bool("print", false, "Shold print the data from the <in> file")
-	isSave := flag.Bool("save", false, "Should save the data into the <out> file")
-	flag.Parse()
-
-	if isDisplay {
+	if isDisplay != nil && *isDisplay {
 		if infile == nil {
 			log.Error("<in> flag should not be empty")
 			return
 		}
-		res, err := dp.Get(*infile)
-		if err != nil {
-			log.Error(err)
-			return
-		}
-		err = printOnTheScreen(dp, print, *infile)
+		err := printOnTheScreen(dp, print, *infile)
 		if err != nil {
 			log.Error(err)
 		}
 		return
 	}
-	if isSave {
+	if isSave != nil && *isSave {
 		if outfile == nil {
 			log.Error("<out> flag should not be empty")
 			return
@@ -64,8 +43,9 @@ func app(da dataAccessor, dp dataPersister, log logger, print printer) {
 }
 
 func main() {
-	app(newUrlDataAccessor(), newDataOnDiskPersister(),
+	app(newUrlDataAccessor(),
+		newDataOnDiskPersister(),
+		newFlagParamGetter(),
 		newLogrusLogger(),
-		log logger, print printer)
-
+		newConsolePrinter())
 }
