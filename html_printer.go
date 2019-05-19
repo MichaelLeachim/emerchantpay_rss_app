@@ -3,37 +3,15 @@
 // @ You can find additional information regarding licensing of this work in LICENSE.md @
 // @ You must not remove this notice, or any other, from this software.                 @
 // @ All rights reserved.                                                               @
-// @@@@@@ At 2019-05-19 00:25 <thereisnodotcollective@gmail.com> @@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@ At 2019-05-19 23:16 <thereisnodotcollective@gmail.com> @@@@@@@@@@@@@@@@@@@@@@@@
+
 package main
 
 import (
 	"bytes"
 	rss_reader "github.com/MichaelLeachim/emerchantpay_rss_reader"
 	"html/template"
-	"log"
 )
-
-type printer interface {
-	Print([]rss_reader.RssItem) error
-}
-
-type consolePrinter struct {
-}
-
-func (c consolePrinter) Print(items []rss_reader.RssItem) error {
-	for _, item := range items {
-		log.Println("[", item.PubishDate.String(), "]", "============================================")
-		log.Println(item.Title)
-		log.Println(item.Description)
-		log.Println(item.Link)
-		log.Println("============================================")
-	}
-	return nil
-}
-
-func newConsolePrinter() printer {
-	return consolePrinter{}
-}
 
 type htmlPrinter struct {
 	storage dataPersister
@@ -41,10 +19,10 @@ type htmlPrinter struct {
 }
 
 func newHtmlPrinter(storage dataPersister, tmpname string) printer {
-	return htmlPrinter{storage: storage, tmpname: tmpname}
+	return &htmlPrinter{storage: storage, tmpname: tmpname}
 }
 
-func (c htmlPrinter) Print(items []rss_reader.RssItem) error {
+func (c *htmlPrinter) Print(items []rss_reader.RssItem) error {
 
 	tpl, err := template.New("webpage").Parse(`<!DOCTYPE html>
     <html>

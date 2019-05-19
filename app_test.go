@@ -11,12 +11,18 @@ import (
 	"testing"
 )
 
-func TestPrintOnTheScreen(t *testing.T) {
-	assert.Equal(t, 1, 1)
-}
+func TestDownloadingPersistingAndLoading(t *testing.T) {
 
-func TestStoreOnDisk(t *testing.T) {
-	assert.Equal(t, 1, 1)
+	// store some data on disk
+	storager := newDataOnDiskMockPersister()
+	err := storeOnDisk(newMockDataAccessor(), storager, "/home/mik/blab/blip/blop.json", []string{})
+	assert.Equal(t, err, nil)
+
+	// load some data from disk
+	mockPrinter := newMockPrinter()
+	printOnTheScreen(storager, mockPrinter, "/home/mik/blab/blip/blop.json")
+	assert.Equal(t, len(mockPrinter.ReadPrinted()), 6)
+	assert.Equal(t, mockPrinter.ReadPrinted()[0].Title, "Google suspends some business with Huawei")
 }
 
 func TestApp(t *testing.T) {
