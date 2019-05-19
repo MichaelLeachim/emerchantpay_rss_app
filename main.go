@@ -9,10 +9,9 @@ package main
 
 import (
 	"flag"
-
 	rss_reader "github.com/MichaelLeachim/emerchantpay_rss_reader"
+	
 )
-
 type listOfUrls []string
 
 func (i *listOfUrls) String() string {
@@ -62,11 +61,11 @@ func app(da dataAccessor, dp dataPersister, log logger, print printer) {
 	}
 	log.Warn("Use either: <save> or <print> flags")
 	return
-
 }
 
 func main() {
 	app(newUrlDataAccessor(), newDataOnDiskPersister(),
+		newLogrusLogger(),
 		log logger, print printer)
 
 }
