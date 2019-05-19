@@ -23,7 +23,7 @@ go test;
 ```bash
 
 ### In order to save as json
-./emerchantpay_rss_app --out=testdata/out.json -save -urlset=https://news.ycombinator.com/rss
+./emerchantpay_rss_app --out=testdata/out.json -save -urlset="https://news.ycombinator.com/rss https://www.theguardian.com/uk/rss"
 
 ### In order to display
 ./emerchantpay_rss_app --in=testdata/out.json -print 
