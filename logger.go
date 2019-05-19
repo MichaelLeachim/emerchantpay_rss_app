@@ -32,7 +32,7 @@ func (m mockLogger) Warn(args ...interface{}) {
 }
 
 func (m mockLogger) Info(args ...interface{}) {
-
+	return
 }
 
 type testLogger struct {

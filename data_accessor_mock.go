@@ -19,7 +19,7 @@ func newMockDataAccessor() mockDataAccessor {
 }
 
 func (m mockDataAccessor) Parse(links []string) []rss_reader.RssItem {
-	mockTimeNow := time.Parse("Mon Jan 2 15:04:05 -0700 MST 2006", "Mon Jan 2 15:04:05 -0700 MST 2006")
+	mockTimeNow, _ := time.Parse("Mon Jan 2 15:04:05 -0700 MST 2006", "Mon Jan 2 15:04:05 -0700 MST 2006")
 	return []rss_reader.RssItem{
 		rss_reader.RssItem{
 			Title:       "Google suspends some business with Huawei",
